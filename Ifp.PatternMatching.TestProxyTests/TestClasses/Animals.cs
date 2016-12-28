@@ -71,10 +71,7 @@ namespace Ifp.PatternMatching.TestProxyTests.TestClasses
 
         public virtual bool IsSearchAndRescueDog { get; }
 
-        Furs IMatchable<Furs>.GetArg()
-        {
-            return this.Fur;
-        }
+        Furs IMatchable<Furs>.GetArg() => this.Fur;
     }
     public class Chicken : Animal, IMatchable<Featherings>
     {
@@ -91,9 +88,6 @@ namespace Ifp.PatternMatching.TestProxyTests.TestClasses
 
         public void Cockadoodledoo() { }
 
-        Featherings IMatchable<Featherings>.GetArg()
-        {
-            return Feathering;
-        }
+        Featherings IMatchable<Featherings>.GetArg() => Feathering;
     }
 }
