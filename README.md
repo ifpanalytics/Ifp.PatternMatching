@@ -79,3 +79,13 @@ var specialAbility = Pattern.Match<Animal, SpecialAbility>(animal).
     Case<Chicken>(c => c.Gender == Gender.Male, SpecialAbility.Crow).
     Default(SpecialAbility.None);
 ```
+
+TODO: Further examples
+
+## Use as a statement
+
+TODO: Further examples
+
+# How to get
+
+TODO: Publish on nuget.org
