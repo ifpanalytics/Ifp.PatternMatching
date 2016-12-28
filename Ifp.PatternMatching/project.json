@@ -6,12 +6,19 @@
   "version": "1.0.0-*",
   "authors": [ "Martin Strecker" ],
   "name": "Ifp.PatternMatching",
+  "iconUrl": "https://cdn3.iconfinder.com/data/icons/wpzoom-developer-icon-set/500/03-32.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ifpanalytics/Ifp.PatternMatching"
+  },
+  "projectUrl": "https://github.com/ifpanalytics/Ifp.PatternMatching",
   "packOptions": {
     "requireLicenseAcceptance": false,
     "owners": [ "Martin Strecker" ],
-    "summary": "Ifp.Patternmatching brings functional pattern matching to C#.",
+    "summary": "Ifp.PatternMatching brings functional pattern matching to C#.",
     "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.html",
     "tags": [ "pattern", "match", "matching", "type", "case", "funcional", "ML" ],
+    "iconUrl": "https://cdn3.iconfinder.com/data/icons/wpzoom-developer-icon-set/500/03-32.png",
     "repository": {
       "type": "git",
       "url": "https://github.com/ifpanalytics/Ifp.PatternMatching"
@@ -19,7 +26,7 @@
   },
   "buildOptions": {
     "warningsAsErrors": true,
-    "outputName": "Ifp.Patternmatching"
+    "outputName": "Ifp.PatternMatching"
   },
 
   "dependencies": {

@@ -65,6 +65,8 @@ namespace PatternMatching
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
         public ReturnMatcher<TValue, TResult> Case<TCase>(Func<TCase, TResult> action) where TCase : TValue => Case(() => mValue is TCase, t => action((TCase)t));
+
+        public ReturnMatcher<TValue, TResult> Case<TCase>(Func<TCase, bool> predicate, TResult result) where TCase : TValue => Case(() => mValue is TCase ? predicate((TCase)mValue) : false, () => result);
         #endregion
 
         #region Match on type with extracted fields

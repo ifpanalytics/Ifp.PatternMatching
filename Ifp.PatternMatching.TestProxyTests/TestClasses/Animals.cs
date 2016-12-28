@@ -32,6 +32,14 @@ namespace Ifp.PatternMatching.TestProxyTests.TestClasses
         Male,
         Female,
     }
+
+    public enum SpecialAbility
+    {
+        None,
+        Crow,
+        Scenting
+    }
+
     public abstract class Animal
     {
         public Animal(Gender gender)
@@ -47,14 +55,21 @@ namespace Ifp.PatternMatching.TestProxyTests.TestClasses
         {
 
         }
+        public Dog(Gender gender, Furs fur) : this(gender, fur, false)
+        {
 
-        public Dog(Gender gender, Furs fur) : base(gender)
+        }
+
+        public Dog(Gender gender, Furs fur, bool isSearchAndRescueDog) : base(gender)
         {
             Fur = fur;
+            IsSearchAndRescueDog = isSearchAndRescueDog;
         }
 
         public Furs Fur { get; }
         public void Bark() { }
+
+        public virtual bool IsSearchAndRescueDog { get; }
 
         Furs IMatchable<Furs>.GetArg()
         {

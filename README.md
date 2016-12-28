@@ -7,3 +7,13 @@ The code was pasted to bitbucket [bitbucket.org/munificent/pattern_matching](htt
 
 # How to use
 
+Match any given `animal` to one special ability by applying this rules:
+* If the `animal` is of type `Dog` and is a `search and rescue dog` then the special ability is *scenting*.
+* If the `animal` is of type `chicken` and is male then the special ability is `crowing`.
+* Otherwise it doesn't have a special ability.     
+```CS
+var specialAbility = Pattern.Match<Animal, SpecialAbility>(animal).
+    Case<Dog>(d => d.IsSearchAndRescueDog, SpecialAbility.Scenting).
+    Case<Chicken>(c => c.Gender == Gender.Male, SpecialAbility.Crow).
+    Default(SpecialAbility.None);
+```

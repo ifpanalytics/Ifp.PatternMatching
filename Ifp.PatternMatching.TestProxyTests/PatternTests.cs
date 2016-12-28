@@ -9,6 +9,14 @@ using System.Threading.Tasks;
 
 namespace PatternMatching.Tests
 {
+    public enum ReturnMatcherResult
+    {
+        Result1,
+        Result2,
+        Result3,
+        Result4
+    }
+
     [TestClass()]
     public class PatternTests
     {
@@ -158,6 +166,54 @@ namespace PatternMatching.Tests
                 Case<Dog, Furs>(f => { Assert.AreEqual(Furs.Blond, f); action2WasCalled = true; });
             Assert.IsFalse(action1WasCalled, "match action1 must not be called");
             Assert.IsTrue(action2WasCalled, "match action2 must be called");
+        }
+
+        [TestMethod()]
+        public void ReturnMatcherMatchesOnObject()
+        {
+            Animal dog = new Dog(Gender.Male);
+            var result = Pattern.Match<Animal, ReturnMatcherResult>(dog).
+                Case(dog, ReturnMatcherResult.Result1);
+            Assert.AreEqual(ReturnMatcherResult.Result1, result);
+        }
+
+        [TestMethod()]
+        public void ReturnMatcherMatchesOnObjectAndReturnsFromDelegate()
+        {
+            Animal dog = new Dog(Gender.Male);
+            var result = Pattern.Match<Animal, ReturnMatcherResult>(dog).
+                Case(dog, () => ReturnMatcherResult.Result1);
+            Assert.AreEqual(ReturnMatcherResult.Result1, result);
+        }
+
+        [TestMethod()]
+        public void ReturnMatcherMatchesOnObjectAndObjectIsPassedToDelegate()
+        {
+            Animal dog = new Dog(Gender.Male);
+            var result = Pattern.Match<Animal, ReturnMatcherResult>(dog).
+                Case(dog, d => { Assert.AreSame(dog, d); return ReturnMatcherResult.Result1; });
+            Assert.AreEqual(ReturnMatcherResult.Result1, result);
+        }
+
+        [TestMethod()]
+        public void ReturnMatcherMatchesOnType()
+        {
+            Animal dog = new Dog(Gender.Male);
+            var result = Pattern.Match<Animal, ReturnMatcherResult>(dog).
+                Case<Chicken>(ReturnMatcherResult.Result2).
+                Case<Dog>(ReturnMatcherResult.Result1);
+            Assert.AreEqual(ReturnMatcherResult.Result1, result);
+        }
+
+        [TestMethod()]
+        public void TypeCheckIfMaleChicken()
+        {
+            Animal animal = new Chicken(Gender.Male);
+            var specialAbility = Pattern.Match<Animal, SpecialAbility>(animal).
+                Case<Dog>(d => d.IsSearchAndRescueDog, SpecialAbility.Scenting).
+                Case<Chicken>(c => c.Gender == Gender.Male, SpecialAbility.Crow).
+                Default(SpecialAbility.None);
+            Assert.AreEqual(SpecialAbility.Crow, specialAbility);
         }
 
         [TestMethod()]
