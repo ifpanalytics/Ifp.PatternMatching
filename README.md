@@ -86,6 +86,10 @@ TODO: Further examples
 
 TODO: Further examples
 
+## Special use cases
+
+TODO: IMatchable<T1,...> and field extraction overloads.
+
 # How to get
 
 TODO: Publish on nuget.org
