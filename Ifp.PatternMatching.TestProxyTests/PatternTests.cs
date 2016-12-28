@@ -16,7 +16,7 @@ namespace PatternMatching.Tests
         [TestMethod()]
         public void ObjectMatchesItself()
         {
-            var dog = new Dog(Gender.Male);
+            Animal dog = new Dog(Gender.Male);
             var actionWasCalled = false;
             Pattern.Match(dog).Case(dog, () => actionWasCalled = true);
             Assert.IsTrue(actionWasCalled, "match action must be called.");
@@ -25,7 +25,7 @@ namespace PatternMatching.Tests
         [TestMethod()]
         public void OnlyOneMatchIsExecuted()
         {
-            var dog = new Dog(Gender.Male);
+            Animal dog = new Dog(Gender.Male);
             var action1WasCalled = false;
             var action2WasCalled = false;
             Pattern.Match(dog).
@@ -38,10 +38,10 @@ namespace PatternMatching.Tests
         [TestMethod()]
         public void NoMatchPassesOnActions()
         {
-            var dog = new Dog(Gender.Male);
-            var chicken = new Chicken(Gender.Male);
+            Animal dog = new Dog(Gender.Male);
+            Chicken chicken = new Chicken(Gender.Male);
             var actionWasCalled = false;
-            Pattern.Match<Animal>(dog).
+            Pattern.Match(dog).
                 Case(chicken, () => actionWasCalled = true);
             Assert.IsFalse(actionWasCalled, "match action must not be called.");
         }
@@ -49,7 +49,7 @@ namespace PatternMatching.Tests
         [TestMethod()]
         public void ObjectMatchesItselfAndIsPassedToTheActionDelegate()
         {
-            var dog = new Dog(Gender.Male);
+            Animal dog = new Dog(Gender.Male);
             var actionWasCalled = false;
             Pattern.Match(dog).Case(dog, d =>
             {
@@ -62,7 +62,7 @@ namespace PatternMatching.Tests
         [TestMethod()]
         public void BoolReturningCaseFunctionMatchesOnTrue()
         {
-            var dog = new Dog(Gender.Male);
+            Animal dog = new Dog(Gender.Male);
             var action1WasCalled = false;
             var action2WasCalled = false;
             Pattern.Match(dog).
@@ -75,7 +75,7 @@ namespace PatternMatching.Tests
         [TestMethod()]
         public void BoolReturningCaseFunctionMatchesOnTrueAndPassesTestValue()
         {
-            var dog = new Dog(Gender.Male);
+            Animal dog = new Dog(Gender.Male);
             var action1WasCalled = false;
             var action2WasCalled = false;
             Pattern.Match(dog).
@@ -90,14 +90,72 @@ namespace PatternMatching.Tests
         }
 
         [TestMethod()]
-        public void TrueReturningPredicateActionIsCalled()
+        public void TrueReturningPredicateActionIsCalledWithTheRightParameter()
         {
-            var dog = new Dog(Gender.Male);
+            Animal dog = new Dog(Gender.Male);
             var action1WasCalled = false;
             var action2WasCalled = false;
             Pattern.Match(dog).
-                Case(d => { Assert.AreSame(dog, d, "Passed Object must be dog."); return false; }, () => action1WasCalled = true).
-                Case(d => { Assert.AreSame(dog, d, "Passed Object must be dog."); return true; }, () => action2WasCalled = true);
+                Case(d => { Assert.AreSame(dog, d, "Passed Object must be dog."); return false; }, d => action1WasCalled = true).
+                Case(d => { Assert.AreSame(dog, d, "Passed Object must be dog."); return true; }, d => { Assert.AreSame(dog, d, "Passed Object must be dog."); action2WasCalled = true; });
+            Assert.IsFalse(action1WasCalled, "match action1 must not be called");
+            Assert.IsTrue(action2WasCalled, "match action2 must be called");
+        }
+
+        [TestMethod()]
+        public void TypeMatchingActionIsCalled()
+        {
+            Animal dog = new Dog(Gender.Male);
+            var action1WasCalled = false;
+            var action2WasCalled = false;
+            Pattern.Match(dog).
+                Case<Chicken>(() => action1WasCalled = true).
+                Case<Dog>(() => action2WasCalled = true);
+            Assert.IsFalse(action1WasCalled, "match action1 must not be called");
+            Assert.IsTrue(action2WasCalled, "match action2 must be called");
+        }
+
+        [TestMethod()]
+        public void TypeMatchingActionIsCalledWithCastParameter()
+        {
+            Animal dog = new Dog(Gender.Male);
+            var action1WasCalled = false;
+            var action2WasCalled = false;
+            Pattern.Match(dog).
+                Case<Chicken>(c => { c.Cockadoodledoo(); action1WasCalled = true; }).
+                Case<Dog>(d => { d.Bark(); action2WasCalled = true; });
+            Assert.IsFalse(action1WasCalled, "match action1 must not be called");
+            Assert.IsTrue(action2WasCalled, "match action2 must be called");
+        }
+
+        [TestMethod()]
+        public void TypeMatchingWithPredicateActionIsCalledWithCastParameter()
+        {
+            Animal dog = new Dog(Gender.Male);
+            var action1WasCalled = false;
+            var action2WasCalled = false;
+            var action3WasCalled = false;
+            var action4WasCalled = false;
+            Pattern.Match(dog).
+                Case<Chicken>(c => c.Gender == Gender.Female, c => { action1WasCalled = true; }).
+                Case<Chicken>(c => c.Gender == Gender.Male, c => { c.Cockadoodledoo(); action2WasCalled = true; }).
+                Case<Dog>(d => d.Gender == Gender.Female, d => { d.Bark(); action3WasCalled = true; }).
+                Case<Dog>(d => d.Gender == Gender.Male, d => { d.Bark(); action4WasCalled = true; });
+            Assert.IsFalse(action1WasCalled, "match action1 must not be called");
+            Assert.IsFalse(action2WasCalled, "match action2 must not be called");
+            Assert.IsFalse(action3WasCalled, "match action3 must not be called");
+            Assert.IsTrue(action4WasCalled, "match action4 must be called");
+        }
+
+        [TestMethod()]
+        public void OneFieldExtractedByMatch()
+        {
+            Animal dog = new Dog(Gender.Male, Furs.Blond);
+            var action1WasCalled = false;
+            var action2WasCalled = false;
+            Pattern.Match(dog).
+                Case<Dog, Featherings>(f => action1WasCalled = true).
+                Case<Dog, Furs>(f => { Assert.AreEqual(Furs.Blond, f); action2WasCalled = true; });
             Assert.IsFalse(action1WasCalled, "match action1 must not be called");
             Assert.IsTrue(action2WasCalled, "match action2 must be called");
         }
@@ -106,8 +164,8 @@ namespace PatternMatching.Tests
         [ExpectedException(typeof(NoMatchException), "No match must raise a NoMatchException.")]
         public void NoMatchRaisesExceptionOnFunctions()
         {
-            var dog = new Dog(Gender.Male);
-            var chicken = new Chicken(Gender.Male);
+            Animal dog = new Dog(Gender.Male);
+            Animal chicken = new Chicken(Gender.Male);
             var test = Pattern.Match<Animal, bool>(dog).
                 Case(chicken, () => true).
                 Result;

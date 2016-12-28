@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PatternMatching;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,24 @@ using System.Threading.Tasks;
 
 namespace Ifp.PatternMatching.TestProxyTests.TestClasses
 {
-    public enum AnimalTypes
+    public enum Furs
     {
-        Dog,
-        Chicken,
+        Unspecified,
+        Black,
+        Brown,
+        Blond,
+        Spotted,
+    }
+
+    public enum Featherings
+    {
+        Unspecified,
+        White,
+        Black,
+        Blue,
+        Yellow,
+        Red,
+        Flecked,
     }
 
     public enum Gender
@@ -26,18 +41,44 @@ namespace Ifp.PatternMatching.TestProxyTests.TestClasses
         public Gender Gender { get; }
     }
 
-    public class Dog : Animal
+    public class Dog : Animal, IMatchable<Furs>
     {
-        public Dog(Gender gender) : base(gender)
+        public Dog(Gender gender) : this(gender, Furs.Unspecified)
         {
 
         }
+
+        public Dog(Gender gender, Furs fur) : base(gender)
+        {
+            Fur = fur;
+        }
+
+        public Furs Fur { get; }
+        public void Bark() { }
+
+        Furs IMatchable<Furs>.GetArg()
+        {
+            return this.Fur;
+        }
     }
-    public class Chicken : Animal
+    public class Chicken : Animal, IMatchable<Featherings>
     {
-        public Chicken(Gender gender) : base(gender)
+        public Chicken(Gender gender) : this(gender, Featherings.Unspecified)
         {
 
+        }
+        public Chicken(Gender gender, Featherings feathering) : base(gender)
+        {
+            Feathering = feathering;
+        }
+
+        public Featherings Feathering { get; }
+
+        public void Cockadoodledoo() { }
+
+        Featherings IMatchable<Featherings>.GetArg()
+        {
+            return Feathering;
         }
     }
 }
