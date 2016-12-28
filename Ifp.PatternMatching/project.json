@@ -16,7 +16,7 @@
     "requireLicenseAcceptance": false,
     "owners": [ "Martin Strecker" ],
     "summary": "Ifp.PatternMatching brings functional pattern matching to C#.",
-    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    "licenseUrl": "https://opensource.org/licenses/MIT",
     "tags": [ "pattern", "match", "matching", "type", "case", "funcional", "ML" ],
     "iconUrl": "https://cdn3.iconfinder.com/data/icons/wpzoom-developer-icon-set/500/03-32.png",
     "repository": {
