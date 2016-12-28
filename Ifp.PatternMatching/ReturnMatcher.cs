@@ -66,6 +66,13 @@ namespace PatternMatching
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
         public ReturnMatcher<TValue, TResult> Case<TCase>(Func<TCase, TResult> action) where TCase : TValue => Case(() => mValue is TCase, t => action((TCase)t));
 
+        /// <summary>
+        /// Match that returns the given result if the value is the given type and if the given predicate returns true.
+        /// </summary>
+        /// <typeparam name="TCase">The type of value to match.</typeparam>
+        /// <param name="predicate">The predicate to evaluate to test the match.</param>
+        /// <param name="result">The result to return if the match is successful.</param>
+        /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
         public ReturnMatcher<TValue, TResult> Case<TCase>(Func<TCase, bool> predicate, TResult result) where TCase : TValue => Case(() => mValue is TCase ? predicate((TCase)mValue) : false, () => result);
         #endregion
 

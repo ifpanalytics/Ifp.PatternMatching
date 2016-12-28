@@ -5,6 +5,8 @@ A library that brings [functional pattern matching](https://en.wikipedia.org/wik
 This library is made by [Bob Nystrom](https://github.com/munificent) and was originaly published 2009 in this [article](http://journal.stuffwithstuff.com/2009/05/13/ml-style-pattern-matching-in-c/).
 The code was pasted to bitbucket [bitbucket.org/munificent/pattern_matching](https://bitbucket.org/munificent/pattern_matching). The library was brought to github, tests were added and nuget packages created.
 
+The library can be used to build business rules that inspect a type hierachie by applying 
+
 # How to use
 
 Match any given `animal` to one special ability by applying this rules:
