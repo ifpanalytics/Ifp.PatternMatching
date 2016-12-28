@@ -22,10 +22,7 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the value matches. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public Matcher<T> Case<TCase>(Action action)
-        {
-            return Case(() => mValue is TCase, action);
-        }
+        public Matcher<T> Case<TCase>(Action action) => Case(() => mValue is TCase, action);
 
         /// <summary>
         /// Match that performs the given Action if the value is the given type.
@@ -34,10 +31,7 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the value matches. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        internal Matcher<T> Case<TCase>(Action<T> action)
-        {
-            return Case(() => mValue is TCase, action);
-        }
+        internal Matcher<T> Case<TCase>(Action<T> action) => Case(() => mValue is TCase, action);
 
         /// <summary>
         /// Match that performs the given Action if the value is the given type.
@@ -46,11 +40,8 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the value matches. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public Matcher<T> Case<TCase>(Action<TCase> action) where TCase : T
-        {
-            return Case(() => mValue is TCase, t=>action((TCase)t));
-        }
-        
+        public Matcher<T> Case<TCase>(Action<TCase> action) where TCase : T => Case(() => mValue is TCase, t => action((TCase)t));
+
         /// <summary>
         /// Match that performs the given Action if the value is the given type.
         /// </summary>
@@ -58,10 +49,7 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the value matches. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public Matcher<T> Case<TCase>(Func<TCase, bool> predicate, Action<TCase> action) where TCase : T
-        {
-            return Case(() => mValue is TCase && predicate((TCase)mValue) , t => action((TCase)t));
-        }
+        public Matcher<T> Case<TCase>(Func<TCase, bool> predicate, Action<TCase> action) where TCase : T => Case(() => mValue is TCase && predicate((TCase)mValue), t => action((TCase)t));
         #endregion
 
         #region Match on type with extracted fields
@@ -151,10 +139,7 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the value matches. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public Matcher<T> Case(T value, Action action)
-        {
-            return Case(() => Equals(mValue, value), action);
-        }
+        public Matcher<T> Case(T value, Action action) => Case(() => Equals(mValue, value), action);
 
         /// <summary>
         /// Match that performs the given Action if the value is the equivalent to the
@@ -164,11 +149,8 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the value matches. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public Matcher<T> Case(T value, Action<T> action)
-        {
-            return Case(() => Equals(mValue, value),
-                        () => action(mValue));
-        }
+        public Matcher<T> Case(T value, Action<T> action) => Case(() => Equals(mValue, value),
+            () => action(mValue));
 
         #endregion
 
@@ -181,10 +163,7 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the predicate passes. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public virtual Matcher<T> Case(Func<bool> predicate, Action action)
-        {
-            return Case(ignore => predicate(), ignore => action());
-        }
+        public virtual Matcher<T> Case(Func<bool> predicate, Action action) => Case(ignore => predicate(), ignore => action());
 
         /// <summary>
         /// Match that performs the given Action if the given predicate returns true.
@@ -193,10 +172,7 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the predicate passes. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public virtual Matcher<T> Case(Func<T, bool> predicate, Action action)
-        {
-            return Case(predicate, ignore => action());
-        }
+        public virtual Matcher<T> Case(Func<T, bool> predicate, Action action) => Case(predicate, ignore => action());
 
         /// <summary>
         /// Match that performs the given Action if the given predicate returns true.
@@ -205,10 +181,7 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the predicate passes. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public virtual Matcher<T> Case(Func<bool> predicate, Action<T> action)
-        {
-            return Case(ignore => predicate(), action);
-        }
+        public virtual Matcher<T> Case(Func<bool> predicate, Action<T> action) => Case(ignore => predicate(), action);
 
         /// <summary>
         /// Match that performs the given Action if the given predicate returns true.
@@ -240,10 +213,7 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the predicate passes. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public Matcher<T> Default(Action action)
-        {
-            return Case(() => true, action);
-        }
+        public Matcher<T> Default(Action action) => Case(() => true, action);
 
         /// <summary>
         /// Default match that always succeeds.
@@ -251,10 +221,7 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the predicate passes. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public Matcher<T> Default(Action<T> action)
-        {
-            return Case(() => true, action);
-        }
+        public Matcher<T> Default(Action<T> action) => Case(() => true, action);
 
         /// <summary>
         /// Initializes a new instance of Matcher that selects a match using the given value.

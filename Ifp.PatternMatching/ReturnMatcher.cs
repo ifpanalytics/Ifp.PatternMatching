@@ -21,10 +21,7 @@ namespace PatternMatching
         /// </summary>
         /// <param name="matcher">The match.</param>
         /// <returns>The result of the match.</returns>
-        public static implicit operator TResult(ReturnMatcher<TValue, TResult> matcher)
-        {
-            return matcher.Result;
-        }
+        public static implicit operator TResult(ReturnMatcher<TValue, TResult> matcher) => matcher.Result;
 
         /// <summary>
         /// Gets the result of the match. Since Result on this type will only be called
@@ -41,10 +38,7 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the value matches.</param>
         /// <param name="result">The result to return if the match is successful.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public ReturnMatcher<TValue, TResult> Case<TCase>(TResult result)
-        {
-            return Case(() => mValue is TCase, result);
-        }
+        public ReturnMatcher<TValue, TResult> Case<TCase>(TResult result) => Case(() => mValue is TCase, result);
 
         /// <summary>
         /// Match that performs the given Action if the value is the given type.
@@ -52,10 +46,7 @@ namespace PatternMatching
         /// <typeparam name="TCase">The type of value to match.</typeparam>
         /// <param name="action">The action to perform if the value matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public ReturnMatcher<TValue, TResult> Case<TCase>(Func<TResult> action)
-        {
-            return Case(() => mValue is TCase, action);
-        }
+        public ReturnMatcher<TValue, TResult> Case<TCase>(Func<TResult> action) => Case(() => mValue is TCase, action);
 
         /// <summary>
         /// Match that performs the given Action if the value is the given type.
@@ -64,10 +55,7 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the value matches. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        internal ReturnMatcher<TValue, TResult> Case<TCase>(Func<TValue, TResult> action)
-        {
-            return Case(() => mValue is TCase, action);
-        }
+        internal ReturnMatcher<TValue, TResult> Case<TCase>(Func<TValue, TResult> action) => Case(() => mValue is TCase, action);
 
         /// <summary>
         /// Match that performs the given Action if the value is the given type.
@@ -76,10 +64,7 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the value matches. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public ReturnMatcher<TValue, TResult> Case<TCase>(Func<TCase, TResult> action) where TCase : TValue
-        {
-            return Case(() => mValue is TCase, t=>action((TCase)t));
-        }
+        public ReturnMatcher<TValue, TResult> Case<TCase>(Func<TCase, TResult> action) where TCase : TValue => Case(() => mValue is TCase, t => action((TCase)t));
         #endregion
 
         #region Match on type with extracted fields
@@ -168,10 +153,7 @@ namespace PatternMatching
         /// <param name="value">The value to compare the match value with.</param>
         /// <param name="result">The result to return if the match is successful.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public virtual ReturnMatcher<TValue, TResult> Case(TValue value, TResult result)
-        {
-            return Case(() => Equals(mValue, value), () => result);
-        }
+        public virtual ReturnMatcher<TValue, TResult> Case(TValue value, TResult result) => Case(() => Equals(mValue, value), () => result);
 
         /// <summary>
         /// Match that performs the given Action if the value is the equivalent to the
@@ -181,10 +163,7 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the value matches. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public virtual ReturnMatcher<TValue, TResult> Case(TValue value, Func<TResult> action)
-        {
-            return Case(() => Equals(mValue, value), action);
-        }
+        public virtual ReturnMatcher<TValue, TResult> Case(TValue value, Func<TResult> action) => Case(() => Equals(mValue, value), action);
 
         /// <summary>
         /// Match that performs the given Action if the value is the equivalent to the
@@ -194,11 +173,8 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the value matches. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public virtual ReturnMatcher<TValue, TResult> Case(TValue value, Func<TValue, TResult> action)
-        {
-            return Case(() => Equals(mValue, value),
-                        () => action(mValue));
-        }
+        public virtual ReturnMatcher<TValue, TResult> Case(TValue value, Func<TValue, TResult> action) => Case(() => Equals(mValue, value),
+            () => action(mValue));
 
         #endregion
 
@@ -210,10 +186,7 @@ namespace PatternMatching
         /// <param name="predicate">The predicate to evaluate to test the match.</param>
         /// <param name="result">The result to return if the match is successful.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public virtual ReturnMatcher<TValue, TResult> Case(Func<bool> predicate, TResult result)
-        {
-            return Case(ignore => predicate(), ignore => result);
-        }
+        public virtual ReturnMatcher<TValue, TResult> Case(Func<bool> predicate, TResult result) => Case(ignore => predicate(), ignore => result);
 
         /// <summary>
         /// Match that performs the given Action if the given predicate returns true.
@@ -221,10 +194,7 @@ namespace PatternMatching
         /// <param name="predicate">The predicate to evaluate to test the match.</param>
         /// <param name="result">The result to return if the match is successful.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public virtual ReturnMatcher<TValue, TResult> Case(Func<TValue, bool> predicate, TResult result)
-        {
-            return Case(predicate, ignore => result);
-        }
+        public virtual ReturnMatcher<TValue, TResult> Case(Func<TValue, bool> predicate, TResult result) => Case(predicate, ignore => result);
 
         /// <summary>
         /// Match that performs the given Action if the given predicate returns true.
@@ -233,10 +203,7 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the predicate passes. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public virtual ReturnMatcher<TValue, TResult> Case(Func<bool> predicate, Func<TResult> action)
-        {
-            return Case(ignore => predicate(), ignore => action());
-        }
+        public virtual ReturnMatcher<TValue, TResult> Case(Func<bool> predicate, Func<TResult> action) => Case(ignore => predicate(), ignore => action());
 
         /// <summary>
         /// Match that performs the given Action if the given predicate returns true.
@@ -245,10 +212,7 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the predicate passes. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public virtual ReturnMatcher<TValue, TResult> Case(Func<TValue, bool> predicate, Func<TResult> action)
-        {
-            return Case(predicate, ignore => action());
-        }
+        public virtual ReturnMatcher<TValue, TResult> Case(Func<TValue, bool> predicate, Func<TResult> action) => Case(predicate, ignore => action());
 
         /// <summary>
         /// Match that performs the given Action if the given predicate returns true.
@@ -257,10 +221,7 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the predicate passes. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public virtual ReturnMatcher<TValue, TResult> Case(Func<bool> predicate, Func<TValue, TResult> action)
-        {
-            return Case(ignore => predicate(), action);
-        }
+        public virtual ReturnMatcher<TValue, TResult> Case(Func<bool> predicate, Func<TValue, TResult> action) => Case(ignore => predicate(), action);
 
         /// <summary>
         /// Match that performs the given Action if the given predicate returns true.
@@ -288,10 +249,7 @@ namespace PatternMatching
         /// </summary>
         /// <param name="result">The result to return.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public ReturnMatcher<TValue, TResult> Default(TResult result)
-        {
-            return Case(() => true, () => result);
-        }
+        public ReturnMatcher<TValue, TResult> Default(TResult result) => Case(() => true, () => result);
 
         /// <summary>
         /// Default match that always succeeds.
@@ -299,10 +257,7 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the predicate passes. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public ReturnMatcher<TValue, TResult> Default(Func<TResult> action)
-        {
-            return Case(() => true, action);
-        }
+        public ReturnMatcher<TValue, TResult> Default(Func<TResult> action) => Case(() => true, action);
 
         /// <summary>
         /// Default match that always succeeds.
@@ -310,10 +265,7 @@ namespace PatternMatching
         /// <param name="action">The action to perform if the predicate passes. May be null
         /// in order to match and do nothing but prevent further matches.</param>
         /// <returns>This Matcher or a NullMatcher if the match succeeded.</returns>
-        public ReturnMatcher<TValue, TResult> Default(Func<TValue, TResult> action)
-        {
-            return Case(() => true, action);
-        }
+        public ReturnMatcher<TValue, TResult> Default(Func<TValue, TResult> action) => Case(() => true, action);
 
         /// <summary>
         /// Initializes a new instance of Matcher that selects a match using the given value.

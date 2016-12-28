@@ -19,10 +19,7 @@ namespace PatternMatching
         /// <typeparam name="T">Type of value being matched.</typeparam>
         /// <param name="value">The value being matched against.</param>
         /// <returns>The Matcher that does the matching.</returns>
-        public static Matcher<T> Match<T>(T value)
-        {
-            return new Matcher<T>(value);
-        }
+        public static Matcher<T> Match<T>(T value) => new Matcher<T>(value);
 
         /// <summary>
         /// Begins a pattern matching block for a match that does return a result.
@@ -30,9 +27,6 @@ namespace PatternMatching
         /// <typeparam name="T">Type of value being matched.</typeparam>
         /// <param name="value">The value being matched against.</param>
         /// <returns>The Matcher that does the matching.</returns>
-        public static ReturnMatcher<TValue, TResult> Match<TValue, TResult>(TValue value)
-        {
-            return new ReturnMatcher<TValue, TResult>(value);
-        }
+        public static ReturnMatcher<TValue, TResult> Match<TValue, TResult>(TValue value) => new ReturnMatcher<TValue, TResult>(value);
     }
 }

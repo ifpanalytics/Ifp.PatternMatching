@@ -13,9 +13,9 @@ namespace PatternMatching
     /// <typeparam name="T"></typeparam>
     public class NullMatcher<T> : Matcher<T>
     {
-        public override Matcher<T> Case(Func<bool> predicate, Action action) { return this; }
-        public override Matcher<T> Case(Func<T, bool> predicate, Action action) { return this; }
-        public override Matcher<T> Case(Func<bool> predicate, Action<T> action) { return this; }
-        public override Matcher<T> Case(Func<T, bool> predicate, Action<T> action) { return this; }
+        public override Matcher<T> Case(Func<bool> predicate, Action action) => this;
+        public override Matcher<T> Case(Func<T, bool> predicate, Action action) => this;
+        public override Matcher<T> Case(Func<bool> predicate, Action<T> action) => this;
+        public override Matcher<T> Case(Func<T, bool> predicate, Action<T> action) => this;
     }
 }

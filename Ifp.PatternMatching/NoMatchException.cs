@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 
 // An F#-like pattern-matching system in C#, by Bob Nystrom.
@@ -16,6 +15,5 @@ namespace PatternMatching
         public NoMatchException() : base() { }
         public NoMatchException(string message) : base(message) { }
         public NoMatchException(string message, Exception innerException) : base(message, innerException) { }
-        public NoMatchException(SerializationInfo info, StreamingContext context) : base(info, context) { }
     }
 }

@@ -1,0 +1,41 @@
+﻿{
+  "copyright": "2017",
+  "language": "en",
+  "title": "F# like Patternmatching for C#",
+  "description": "A libraray for functional patten matching based on the work of Bob Nystrom",
+  "version": "1.0.0-*",
+  "authors": [ "Martin Strecker" ],
+  "name": "Ifp.PatternMatching",
+  "packOptions": {
+    "requireLicenseAcceptance": false,
+    "owners": [ "Martin Strecker" ],
+    "summary": "Ifp.Patternmatching brings functional pattern matching to C#.",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    "tags": [ "pattern", "match", "matching", "type", "case", "funcional", "ML" ],
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/ifpanalytics/Ifp.PatternMatching"
+    }
+  },
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "outputName": "Ifp.Patternmatching"
+  },
+
+  "dependencies": {
+    "NETStandard.Library": "1.6.0"
+  },
+
+  "frameworks": {
+    "netstandard1.0": {
+      "imports": "dnxcore50"
+    },
+    ".NETPortable,Version=v4.0,Profile=Profile328": {
+      "frameworkAssemblies": {
+        "mscorlib": "",
+        "System": "",
+        "System.Core": ""
+      }
+    }
+  }
+}
