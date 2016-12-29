@@ -86,6 +86,7 @@ var objOfTargetType=Pattern.Match<TSourceType, TTargetType>(objOfSourceType).
 ```
 
 `Case` consist of three parts `Case<Type parameter>(Predicate, Retrun value);`
+
 1. *Optional* **Type parameter**. The type of value to match. `TCase` must be a sub-type of the `TSourceType`
 2. *Optional* **Predicate** The predicate to evaluate to test the match. The predicate can be either
     * A concrete value or
@@ -108,6 +109,7 @@ int number = Pattern.Match<string, int>("III").
 ### Example 1) Matching on a type and conditions
 
 Match any given `animal` to one special ability by applying this rules:
+
 * If the `animal` is of type `Dog` and is a `search and rescue dog` then the special ability is *scenting*.
 * If the `animal` is of type `chicken` and is male then the special ability is *crowing*.
 * Otherwise it doesn't have a special ability.     
@@ -141,6 +143,7 @@ namespace AnimalRules
 ### Example 2) Matching and returning by inspecting details of the source object
 
 Calculate the discount of a shopping cart by applying this rules:
+
 * If the customer is `ClubMember` the discount is 5% of the carts order value.
 * If the customer is `FirstTimeCustomer` the discount is 4% of the carts order value 
 * If the customer is `StandardCustomer` the discount is 2% of the carts order value
