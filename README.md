@@ -181,6 +181,7 @@ Pattern.Match(objOfSourceType).
 ```
 
 `Case` consist of three parts `Case<Type parameter>(Predicate, Action);`
+
 1. *Optional* **Type parameter**. The type of value to match. `TCase` must be a sub-type of the `TSourceType`
 2. *Optional* **Predicate** The predicate to evaluate to test the match. The predicate can be either
     * A concrete value or
