@@ -11,7 +11,7 @@ namespace PatternMatching
     /// Exposes a single field from a type used in a pattern matching case.
     /// </summary>
     /// <typeparam name="TArg">Type of field being exposed.</typeparam>
-    public interface IMatchable<TArg>
+    public interface IMatchable<out TArg>
     {
         TArg GetArg();
     }
@@ -21,7 +21,7 @@ namespace PatternMatching
     /// </summary>
     /// <typeparam name="TArg1">Type of field being exposed.</typeparam>
     /// <typeparam name="TArg2">Type of field being exposed.</typeparam>
-    public interface IMatchable<TArg1, TArg2>
+    public interface IMatchable<out TArg1, out TArg2>
     {
         TArg1 GetArg1();
         TArg2 GetArg2();
@@ -33,7 +33,7 @@ namespace PatternMatching
     /// <typeparam name="TArg1">Type of field being exposed.</typeparam>
     /// <typeparam name="TArg2">Type of field being exposed.</typeparam>
     /// <typeparam name="TArg3">Type of field being exposed.</typeparam>
-    public interface IMatchable<TArg1, TArg2, TArg3>
+    public interface IMatchable<out TArg1, out TArg2, out TArg3>
     {
         TArg1 GetArg1();
         TArg2 GetArg2();
@@ -47,7 +47,7 @@ namespace PatternMatching
     /// <typeparam name="TArg2">Type of field being exposed.</typeparam>
     /// <typeparam name="TArg3">Type of field being exposed.</typeparam>
     /// <typeparam name="TArg4">Type of field being exposed.</typeparam>
-    public interface IMatchable<TArg1, TArg2, TArg3, TArg4>
+    public interface IMatchable<out TArg1, out TArg2, out TArg3, out TArg4>
     {
         TArg1 GetArg1();
         TArg2 GetArg2();

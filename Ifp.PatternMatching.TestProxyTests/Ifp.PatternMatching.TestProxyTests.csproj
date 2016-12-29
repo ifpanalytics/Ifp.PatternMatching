@@ -59,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ifp.PatternMatching.TestProxy\Ifp.PatternMatching.TestProxy.csproj">
-      <Project>{62368323-9D40-439D-AD74-222200431583}</Project>
+      <Project>{62368323-9d40-439d-ad74-222200431583}</Project>
       <Name>Ifp.PatternMatching.TestProxy</Name>
     </ProjectReference>
   </ItemGroup>

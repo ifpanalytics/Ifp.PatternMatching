@@ -25,29 +25,45 @@ namespace Ifp.PatternMatching.TestProxyTests.TestClasses
         public int MembershipAge { get; }
     }
 
+
+    public abstract class PayMethod
+    {
+
+    }
+    public class CreditCard: PayMethod
+    {
+
+    }
+    public class AdvancePayment : PayMethod
+    {
+
+    }
+
     public class Address
     {
         public float ShippingDistance { get; }
     }
 
-    public abstract class ShopingCart
+    public abstract class ShoppingCart
     {
-        public ShopingCart()
+        public ShoppingCart()
         {
             Customer = new StandardCustomer();
             ShippingAddress = new Address();
+            PayMethod = new AdvancePayment();
         }
 
         public int OrderValue { get; }
         public Customer Customer { get; }
         public Address ShippingAddress { get; }
+        public PayMethod PayMethod { get; }
     }
 
-    public class WebShopingCart : ShopingCart
+    public class WebShoppingCart : ShoppingCart
     {
         public string PromoCode { get; }
     }
-    public class AppShopingCart: ShopingCart
+    public class AppShoppingCart: ShoppingCart
     {
         public bool IsFirstRunExperience { get; }
     }

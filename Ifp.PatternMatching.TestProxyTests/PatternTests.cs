@@ -169,6 +169,17 @@ namespace PatternMatching.Tests
         }
 
         [TestMethod()]
+        [ExpectedException(typeof(NoMatchException), "No match must raise a NoMatchException.")]
+        public void NoMatchRaisesExceptionOnFunctions()
+        {
+            Animal dog = new Dog(Gender.Male);
+            Animal chicken = new Chicken(Gender.Male);
+            var test = Pattern.Match<Animal, bool>(dog).
+                Case(chicken, () => true).
+                Result;
+        }
+
+        [TestMethod()]
         public void ReturnMatcherMatchesOnObject()
         {
             Animal dog = new Dog(Gender.Male);
@@ -205,26 +216,79 @@ namespace PatternMatching.Tests
             Assert.AreEqual(ReturnMatcherResult.Result1, result);
         }
 
-        [TestMethod()]
-        public void TypeCheckIfMaleChicken()
+        [TestMethod]
+        public void ReturnMatcherMatchesOnTypeAndPredicateReturnsByValue()
         {
-            Animal animal = new Chicken(Gender.Male);
-            var specialAbility = Pattern.Match<Animal, SpecialAbility>(animal).
-                Case<Dog>(d => d.IsSearchAndRescueDog, SpecialAbility.Scenting).
-                Case<Chicken>(c => c.Gender == Gender.Male, SpecialAbility.Crow).
-                Default(SpecialAbility.None);
-            Assert.AreEqual(SpecialAbility.Crow, specialAbility);
+            Animal animal = new Chicken(Gender.Male, Featherings.Black);
+            var result = Pattern.Match<Animal, ReturnMatcherResult>(animal).
+                Case<Dog>(d => ReturnMatcherResult.Result1).
+                Case<Chicken>(c => c.Feathering == Featherings.Flecked, ReturnMatcherResult.Result2).
+                Case<Chicken>(c => c.Feathering == Featherings.Black, ReturnMatcherResult.Result3).
+                Case<Chicken>(ReturnMatcherResult.Result4).
+                Result;
+            Assert.AreEqual(ReturnMatcherResult.Result3, result);
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(NoMatchException), "No match must raise a NoMatchException.")]
-        public void NoMatchRaisesExceptionOnFunctions()
+        [TestMethod]
+        public void ReturnMatcherMatchesOnTypeAndPredicateReturnsByFunc1()
         {
-            Animal dog = new Dog(Gender.Male);
-            Animal chicken = new Chicken(Gender.Male);
-            var test = Pattern.Match<Animal, bool>(dog).
-                Case(chicken, () => true).
+            Animal animal = new Chicken(Gender.Male, Featherings.Black);
+            var result = Pattern.Match<Animal, ReturnMatcherResult>(animal).
+                Case<Dog>(d => ReturnMatcherResult.Result1).
+                Case<Chicken>(c => c.Feathering == Featherings.Flecked, () => ReturnMatcherResult.Result2).
+                Case<Chicken>(c => c.Feathering == Featherings.Black, () => ReturnMatcherResult.Result3).
+                Case<Chicken>(() => ReturnMatcherResult.Result4).
                 Result;
+            Assert.AreEqual(ReturnMatcherResult.Result3, result);
+        }
+
+        [TestMethod]
+        public void ReturnMatcherMatchesOnTypeAndPredicateReturnsByFunc2()
+        {
+            Animal animal = new Chicken(Gender.Male, Featherings.Black);
+            var result = Pattern.Match<Animal, ReturnMatcherResult>(animal).
+                Case<Dog>(d => ReturnMatcherResult.Result1).
+                Case<Chicken>(c => c.Feathering == Featherings.Flecked, c => { Assert.AreEqual(animal, c); return ReturnMatcherResult.Result2; }).
+                Case<Chicken>(c => c.Feathering == Featherings.Black, c => { Assert.AreEqual(animal, c); return ReturnMatcherResult.Result3; }).
+                Case<Chicken>(c => { Assert.AreEqual(animal, c); return ReturnMatcherResult.Result4; }).
+                Result;
+            Assert.AreEqual(ReturnMatcherResult.Result3, result);
+        }
+
+        [TestMethod]
+        public void ReturnMatcherMatchesOnPredicateAndReturnsValue()
+        {
+            Animal animal = new Chicken(Gender.Male, Featherings.Black);
+            var result = Pattern.Match<Animal, ReturnMatcherResult>(animal).
+                Case(a => a.Gender == Gender.Female, ReturnMatcherResult.Result1).
+                Case(a => a.Gender == Gender.Male, ReturnMatcherResult.Result2).
+                Default(ReturnMatcherResult.Result3).
+                Result;
+            Assert.AreEqual(ReturnMatcherResult.Result2, result);
+        }
+
+        [TestMethod]
+        public void ReturnMatcherMatchesOnPredicateAndReturnsValueFromFunc1()
+        {
+            Animal animal = new Chicken(Gender.Male, Featherings.Black);
+            var result = Pattern.Match<Animal, ReturnMatcherResult>(animal).
+                Case(a => a.Gender == Gender.Female, () => ReturnMatcherResult.Result1).
+                Case(a => a.Gender == Gender.Male, () => ReturnMatcherResult.Result2).
+                Default(ReturnMatcherResult.Result3).
+                Result;
+            Assert.AreEqual(ReturnMatcherResult.Result2, result);
+        }
+
+        [TestMethod]
+        public void ReturnMatcherMatchesOnPredicateAndReturnsValueFromFunc2()
+        {
+            Animal animal = new Chicken(Gender.Male, Featherings.Black);
+            var result = Pattern.Match<Animal, ReturnMatcherResult>(animal).
+                Case(a => a.Gender == Gender.Female, a => { Assert.AreSame(animal, a); return ReturnMatcherResult.Result1; }).
+                Case(a => a.Gender == Gender.Male, a => { Assert.AreSame(animal, a); return ReturnMatcherResult.Result2; }).
+                Default(ReturnMatcherResult.Result3).
+                Result;
+            Assert.AreEqual(ReturnMatcherResult.Result2, result);
         }
     }
 }
