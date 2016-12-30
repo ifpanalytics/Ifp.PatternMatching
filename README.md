@@ -198,7 +198,7 @@ Let the animal make a noise.
 ```CS
 var animal = new Dog(Gender.Male);
 Pattern.Match<Animal>(animal).
-    Case<Chicken>(c=>c.Gender==Gender.Male, c => c.Cockadoodledoo()).
+    Case<Chicken>(c => c.Gender == Gender.Male, c => c.Cockadoodledoo()).
     Case<Dog>(d => d.Bark());
 ```
 The type parameter when calling the `Match` method is usally not needed:
@@ -206,7 +206,7 @@ The type parameter when calling the `Match` method is usally not needed:
 ```CS
 Animal animal = new Dog(Gender.Male);
 Pattern.Match(animal). //Type 'Animal' correctly inferred
-    Case<Chicken>(c=>c.Gender==Gender.Male, c => c.Cockadoodledoo()).
+    Case<Chicken>(c => c.Gender == Gender.Male, c => c.Cockadoodledoo()).
     Case<Dog>(d => d.Bark());
 ```
 

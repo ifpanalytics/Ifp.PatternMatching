@@ -147,7 +147,7 @@ namespace Ifp.PatternMatching.TestProxyTests
         {
             var animal = new Dog(Gender.Male);
             Pattern.Match<Animal>(animal).
-                Case<Chicken>(c=>c.Gender==Gender.Male, c => c.Cockadoodledoo()).
+                Case<Chicken>(c => c.Gender == Gender.Male, c => c.Cockadoodledoo()).
                 Case<Dog>(d => d.Bark());
         }
     }
