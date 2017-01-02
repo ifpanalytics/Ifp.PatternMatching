@@ -41,11 +41,11 @@ namespace Ifp.PatternMatching.TestProxyTests
             //matching on a condition and nested pattern matching
             var cartDiscounts = Pattern.Match<ShoppingCart, decimal>(shoppingCart).
                 Case(cart => cart.OrderValue > 100, cart => Pattern.Match<Customer, decimal>(cart.Customer). // if the order value is bigger than 100 the discount depends on the customer status
-                    Case<ClubMember>(0.1m). // Clubmember always get 10%
+                    Case<ClubMember>(0.1m). // Club member always get 10%
                     Case<StandardCustomer>(standardCustomer => !standardCustomer.HasOutstandingDebts, 0.05m). // standardCustomers get 5% if there are no outstanding debts
                     Default(0.0m).
                     Result).
-                Case(cart => cart.OrderValue > 50, 0.02m). // between 50 and 100, the dscount is 2% without furher conditions
+                Case(cart => cart.OrderValue > 50, 0.02m). // between 50 and 100, the discount is 2% without further conditions
                 Default(0.0m).
                 Result;
 
@@ -150,6 +150,19 @@ namespace Ifp.PatternMatching.TestProxyTests
                 Case<Chicken>(c => c.Gender == Gender.Male, c => c.Cockadoodledoo()).
                 Case<Dog>(d => d.Bark());
         }
+
+        private void WashMe(Furs fur) { }
+        private void MakeUnableToFly(Featherings feathering) { }
+
+        [TestMethod]
+        public void IMatchable()
+        {
+            Animal animal = new Dog(Gender.Male, Furs.Brown);
+            Pattern.Match(animal).
+                Case<Dog, Furs>(fur => WashMe(fur)).
+                Case<Chicken, Featherings>(feathering => MakeUnableToFly(feathering));
+        }
+
     }
 }
 

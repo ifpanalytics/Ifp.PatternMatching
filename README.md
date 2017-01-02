@@ -19,11 +19,11 @@ var specialFrontendOffers = Pattern.Match<ShoppingCart, decimal>(shoppingCart).
 //matching on a condition and nested pattern matching
 var cartDiscounts = Pattern.Match<ShoppingCart, decimal>(shoppingCart).
     Case(cart => cart.OrderValue > 100, cart => Pattern.Match<Customer, decimal>(cart.Customer). // if the order value is bigger than 100 the discount depends on the customer status
-        Case<ClubMember>(0.1m). // Clubmember always get 10%
+        Case<ClubMember>(0.1m). // Club member always get 10%
         Case<StandardCustomer>(standardCustomer => !standardCustomer.HasOutstandingDebts, 0.05m). // standardCustomers get 5% if there are no outstanding debts
         Default(0.0m).
         Result).
-    Case(cart => cart.OrderValue > 50, 0.02m). // between 50 and 100, the dscount is 2% without furher conditions
+    Case(cart => cart.OrderValue > 50, 0.02m). // between 50 and 100, the discount is 2% without further conditions
     Default(0.0m).
     Result;
 
@@ -51,7 +51,7 @@ Pattern.Match(shoppingCart.PayMethod).
 The `Pattern.Match` can be used either as expression:
 
 ```CS
-// map US grades to german grades (schulnote) 
+// map US grades to German grades (schulnote) 
 var grade = "A";
 var schulnote = Pattern.Match<string, int>(grade).
     Case("A", 1).
@@ -79,13 +79,13 @@ If used as an expression the pattern matching looks like this:
 ```CS
 //start the pattern-match by specifying the source and target type and passing an object of the source-type.
 var objOfTargetType=Pattern.Match<TSourceType, TTargetType>(objOfSourceType).  
-    Case(...).  //specifiy cases (see below)
+    Case(...).  //specify cases (see below)
     Case(...).
     Default(...). //specify a default value
-    Result; //ask for the result. Throws excpetion if there is no match
+    Result; //ask for the result. Throws exception if there is no match
 ```
 
-`Case` consist of three parts `Case<Type parameter>(Predicate, Retrun value);`
+`Case` consist of three parts `Case<Type parameter>(Predicate, Return value);`
 
 1. *Optional* **Type parameter**. The type of value to match. `TCase` must be a sub-type of the `TSourceType`
 2. *Optional* **Predicate** The predicate to evaluate to test the match. The predicate can be either
@@ -95,13 +95,13 @@ var objOfTargetType=Pattern.Match<TSourceType, TTargetType>(objOfSourceType).
     * Either a concrete value of type `TTargetType` or
     * A function that produces a `TTargetType`. This can either be a `Func<TCase, TTargetType>` or a `Func<TTargetType>`. 
 
-`Result` is optional because the `RetrunMatcher` can implicit be converted to the TargetType:
+`Result` is optional because the `ReturnMatcher` can implicit be converted to the TargetType:
 
 ```CS
 int number = Pattern.Match<string, int>("III"). 
     Case("I", 1).
     Case("II", 2).
-    Case("III", 3). // 'Case' returns a RetrunMatcher that is implicit converted to an int.
+    Case("III", 3). // 'Case' returns a ReturnMatcher that is implicit converted to an int.
     Case("IV", 4).
     Case("V", 5);
 ```
@@ -178,9 +178,9 @@ If used as a statement the pattern matching looks like this:
 ```CS
 //start the pattern-match by passing an object of the source-type.
 Pattern.Match(objOfSourceType).  
-    Case(...).  //specifiy cases (see below)
+    Case(...).  //specify cases (see below)
     Case(...).
-    Default(...); //specifiy a default action
+    Default(...); //specify a default action
 ```
 
 `Case` consist of three parts `Case<Type parameter>(Predicate, Action);`
@@ -201,7 +201,7 @@ Pattern.Match<Animal>(animal).
     Case<Chicken>(c => c.Gender == Gender.Male, c => c.Cockadoodledoo()).
     Case<Dog>(d => d.Bark());
 ```
-The type parameter when calling the `Match` method is usally not needed:
+The type parameter when calling the `Match` method is usually not needed:
 
 ```CS
 Animal animal = new Dog(Gender.Male);
@@ -212,7 +212,26 @@ Pattern.Match(animal). //Type 'Animal' correctly inferred
 
 ## Special use cases
 
-TODO: `IMatchable<T1,...>` and field extraction overloads.
+The library supports the extraction of properties during a match to allow [decomposition](http://hestia.typepad.com/flatlander/2010/07/f-pattern-matching-for-beginners-part-2-decomposition.html):
+
+```CS
+Pattern.Match(animal).
+    Case<Dog, Furs>(fur => WashMe(fur)). // Dog has a property of type Furs that is extracted from the dog instance.
+    Case<Chicken, Featherings>(feathering => MakeUnableToFly(feathering));
+```
+
+To support decomposition the source object needs to implement the `IMatchable` interface:
+
+```CS
+public class Dog : Animal, IMatchable<Furs> //Implement IMatchable 
+{
+    public Furs Fur { get; } // The property that is enabled for pattern matching.
+    
+    Furs IMatchable<Furs>.GetArg() => this.Fur; //Explicit interface implementation.
+}
+```
+
+It is possible to support up to four decomposable object properties. 
 
 # How to get
 

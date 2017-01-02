@@ -1,7 +1,7 @@
 ﻿{
   "copyright": "2017",
-  "title": "F# like Patternmatching for C#",
-  "description": "A libraray for functional patten matching based on the work of Bob Nystrom",
+  "title": "Ifp.PatternMatching",
+  "description": "A libraray for F# like functional patten matching based on the work of Bob Nystrom",
   "version": "1.0.0-*",
   "authors": [ "Martin Strecker" ],
   "name": "Ifp.PatternMatching",
