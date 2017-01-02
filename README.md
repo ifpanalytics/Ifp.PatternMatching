@@ -225,7 +225,7 @@ To support decomposition the source object needs to implement the `IMatchable` i
 ```CS
 public class Dog : Animal, IMatchable<Furs> //Implement IMatchable 
 {
-    public Furs Fur { get; } // The property that is enabled for pattern matching.
+    public Furs Fur { get; } // The property that is enabled for decomposition in pattern matching.
     
     Furs IMatchable<Furs>.GetArg() => this.Fur; //Explicit interface implementation.
 }
