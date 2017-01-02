@@ -1,8 +1,8 @@
 ﻿{
   "copyright": "2017",
   "title": "Ifp.PatternMatching",
-  "description": "A libraray for F# like functional patten matching based on the work of Bob Nystrom",
-  "version": "1.0.0-*",
+  "description": "A libraray for F# like functional patten matching based on the work of Bob Nystrom.",
+  "version": "1.0.0",
   "authors": [ "Martin Strecker" ],
   "name": "Ifp.PatternMatching",
   "packOptions": {
@@ -12,6 +12,7 @@
     "licenseUrl": "https://opensource.org/licenses/MIT",
     "tags": [ "pattern", "match", "matching", "type", "case", "functional", "ML" ],
     "iconUrl": "https://cdn3.iconfinder.com/data/icons/wpzoom-developer-icon-set/500/03-32.png",
+    "projectUrl": "https://github.com/ifpanalytics/Ifp.PatternMatching",
     "repository": {
       "type": "git",
       "url": "https://github.com/ifpanalytics/Ifp.PatternMatching"

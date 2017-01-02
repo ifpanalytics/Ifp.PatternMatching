@@ -235,4 +235,10 @@ It is possible to support up to four decomposable object properties.
 
 # How to get
 
-TODO: Publish on nuget.org
+The library can be installed via nuget:
+[https://www.nuget.org/packages/Ifp.PatternMatching/](https://www.nuget.org/packages/Ifp.PatternMatching/)
+
+Install via [Package Manager Console](https://docs.nuget.org/ndocs/tools/package-manager-console)
+```CS
+PS> Install-Package Ifp.PatternMatching
+```

@@ -162,7 +162,6 @@ namespace Ifp.PatternMatching.TestProxyTests
                 Case<Dog, Furs>(fur => WashMe(fur)).
                 Case<Chicken, Featherings>(feathering => MakeUnableToFly(feathering));
         }
-
     }
 }
 
